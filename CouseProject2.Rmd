@@ -52,6 +52,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Read Data and Create data frame
 
 ```{r read data,chache=TRUE}
+library(dplyr)
 library(R.utils)
 library(data.table)
 
@@ -71,10 +72,22 @@ str(SD_df)
 summary(SD_df)
 
 ```
+### Across the United States, which types of events (as indicated in the \color{red}{\verb|EVTYPE|}EVTYPE variable) are most harmful with respect to population health?
+
+*harmful* is total damege.
+I think that the sum of each column(FATALITIES,INJURIES,PROPDMG,CROPDMG) is appropriate.
 
 ```{r chack population health}
 
+SD_df %>%
+  mutate(harmful = FATALITIES+INJURIES+PROPDMG+CROPDMG) %>%
+  select(EVTYPE,harmful) %>%
+  group_by(EVTYPE) %>%
+  summarise(harmful=sum(harmful)) %>%
+    arrange(-harmful)
 ```
+ 
+ 
 
 
 ## Including Plots

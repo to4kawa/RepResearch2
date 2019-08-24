@@ -141,7 +141,7 @@ result_df %>%
 
 ## Results
 
-Event with most harmful: **`r result_f[[1,1]]` **  
+Event with most harmful: **`r result_f[[1,1]]`**  
 Event with greatest economic consequences: **`r result_d[[1,1]]`**  
 
 These are the answers to this assignment.

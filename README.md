@@ -6,6 +6,8 @@ data: "2019/08/24"
 output:
   html_document:
     keep_md: yes
+    toc: yes
+    toc_float: true
 ---
 
 ## Files
@@ -37,4 +39,8 @@ This program is data analysis program that address the following questions:
 1. Across the United States, which types of events (as indicated in the <span style="color: red; ">EVTYPE</span> variable) are most harmful with respect to population health?
 
 2. Across the United States, which types of events have the greatest economic consequences?
+
+## URL to reference
+
+http://rpubs.com/tuenguyends/521422
 

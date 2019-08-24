@@ -6,10 +6,12 @@ data: "2019/08/24"
 output:
   html_document:
     keep_md: yes
+    toc: yes
+    toc_float: true
 ---
 
 ## Synopsis
- As a result of this analysis, it was found that TORNAD has the greatest human damage and FLOOD has the most damage.
+ This analysis collects the following data for each disaster and examines the one with the most deaths and the one with the most damage.
 
 ## Data
 
@@ -62,7 +64,7 @@ This may make the document a bit verbose, but that is okay. In general, you shou
 
 
 
-## Read Data and Create data frame
+## Read Data
 
 
 ```r
@@ -218,7 +220,8 @@ summary(SD_df)
 ## 
 ```
 
-## Create an appropriate data frame
+## Data Processing 
+### Create an appropriate data frame
 
 There are two problems with this assignment.I define these as follows:  
 1. The most harmful with respect to population health: Defined as having caused the most deaths.  
@@ -267,6 +270,8 @@ result_df %>%
   dplyr::filter(rank <= 5) -> result_d
 ```
 
+## Results
+
 Event with most harmful: **TORNADO **  
 Event with greatest economic consequences: **FLOOD**  
 
@@ -274,7 +279,7 @@ These are the answers to this assignment.
 
 ## Plot aggregate data
 
-Plot the top 5 events by number and amount of victims
+Plot the top events by number and amount of victims
 
 
 ```r
@@ -288,13 +293,13 @@ rbind(result_f,result_d) %>%
   facet_grid(rows=vars(damage),scales="free") +
   scale_y_continuous(name="Number/Amount",
                      labels = scales::comma) +
-  labs(title="Top 5 event") + 
+  labs(title="Top event") + 
   xlab("Event") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         plot.title = element_text(hjust = 0.5)) 
 ```
 
-![](CouseProject2_files/figure-html/plot data-1.png)<!-- -->
+![](CourseProject2_files/figure-html/plot data-1.png)<!-- -->
 
 ## Conclusion
 

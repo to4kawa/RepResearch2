@@ -46,21 +46,22 @@ You must show all your code for the work in your analysis document. This may mak
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE,message=FALSE)
 ```
 
 ## Read Data and Create data frame
 
-```{r read data,chache=TRUE}
+```{r read data}
 library(dplyr)
 library(R.utils)
 library(data.table)
-
+```
+```{r}
 url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
 if(!file.exists("StormData.csv.bz2")) download.file(url,"StormData.csv.bz2")
 ```
 
-```{r,chache=TRUE}
+```{r chache=TRUE}
 if(!any(ls() %in% "SD_df")) SD_df <- fread("StormData.csv.bz2")
 head(SD_df)
 ```
@@ -69,19 +70,22 @@ head(SD_df)
 summary(SD_df)
 
 ```
-### Across the United States, which types of events (as indicated in the \color{red}{\verb|EVTYPE|}EVTYPE variable) are most harmful with respect to population health?
+## Across the United States, which types of events (as indicated in the \color{red}{\verb|EVTYPE|}EVTYPE variable) are most harmful with respect to population health?
 
-*harmful* is total damege.
-I think that the sum of each column(FATALITIES,INJURIES,PROPDMG,CROPDMG) is appropriate.
+*harmful* is defined as the most dead, most injured, and the most damaged.
+Check the total number of deaths per disaster.
 
-```{r chack population health}
+```{r chack most harmful EVTYPE}
 
 SD_df %>%
   mutate(harmful = FATALITIES+INJURIES+PROPDMG+CROPDMG) %>%
-  select(EVTYPE,harmful) %>%
+##  select(EVTYPE,harmful) %>%
   group_by(EVTYPE) %>%
-  summarise(harmful=sum(harmful)) %>%
-    arrange(-harmful) -> result_df
+  summarise(totalFatalitied=sum(FATALITIES),totalInjuries=sum(INJURIES),
+            totalPropdmg=sum(PROPDMG),totalCropdmg=sum(CROPDMG)) %>%
+  mutate(totalDMGAmount=totalPropdmg+totalCropdmg) %>%
+  arrange(-totalFatalitied) %>%
+  select(EVTYPE,totalFatalitied,totalInjuries,totalDMGAmount) -> result_df
 result_df
 ```
 **From this result, I think that the `r result_df[[1,1]]` caused the most damage.**
